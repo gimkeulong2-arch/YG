@@ -35,14 +35,13 @@
         "Noto Sans KR",
         sans-serif;
 
-      background:
-        #f3f5f8;
-
-      color:
-        #111827;
+      background: #f3f5f8;
+      color: #111827;
     }
 
     .top {
+      padding: 20px 20px 38px;
+
       background:
         linear-gradient(
           145deg,
@@ -51,11 +50,6 @@
         );
 
       color: white;
-
-      padding:
-        20px
-        20px
-        38px;
     }
 
     .top-inner {
@@ -76,8 +70,8 @@
       align-items: center;
       gap: 10px;
 
-      font-weight: 800;
       font-size: 18px;
+      font-weight: 800;
     }
 
     .ball {
@@ -91,24 +85,14 @@
       border-radius: 12px;
 
       background:
-        rgba(
-          255,
-          255,
-          255,
-          0.12
-        );
+        rgba(255, 255, 255, 0.12);
 
       font-size: 21px;
     }
 
     .kbo {
       color:
-        rgba(
-          255,
-          255,
-          255,
-          0.55
-        );
+        rgba(255, 255, 255, 0.55);
 
       font-size: 12px;
       font-weight: 700;
@@ -133,10 +117,7 @@
     }
 
     .hero-text {
-      margin:
-        13px
-        0
-        0;
+      margin: 13px 0 0;
 
       color: #b7c4d8;
 
@@ -150,10 +131,7 @@
 
       margin: 0 auto;
 
-      padding:
-        22px
-        17px
-        60px;
+      padding: 22px 17px 60px;
     }
 
     .section {
@@ -165,19 +143,14 @@
       align-items: center;
       justify-content: space-between;
 
-      margin:
-        0
-        3px
-        12px;
+      margin: 0 3px 12px;
     }
 
     .section-title h2 {
       margin: 0;
 
       font-size: 19px;
-
-      letter-spacing:
-        -0.035em;
+      letter-spacing: -0.035em;
     }
 
     .section-title span {
@@ -186,49 +159,50 @@
     }
 
     .card {
+      overflow: hidden;
+
       background: white;
 
-      border:
-        1px solid
-        #e6e9ee;
-
+      border: 1px solid #e6e9ee;
       border-radius: 21px;
 
       box-shadow:
-        0
-        5px
-        18px
-        rgba(
-          25,
-          35,
-          55,
-          0.045
-        );
+        0 5px 18px
+        rgba(25, 35, 55, 0.045);
     }
 
     .today-card {
-      padding:
-        22px
-        20px;
+      padding: 21px 19px;
     }
 
     .game-state {
       display: inline-flex;
 
-      padding:
-        5px
-        9px;
-
-      margin-bottom: 20px;
+      padding: 5px 9px;
+      margin-bottom: 21px;
 
       border-radius: 999px;
 
       background: #eef2f7;
-
       color: #697586;
 
       font-size: 11px;
       font-weight: 800;
+    }
+
+    .game-state.live {
+      background: #fff0f0;
+      color: #d71920;
+    }
+
+    .game-state.finished {
+      background: #eef2f7;
+      color: #667085;
+    }
+
+    .game-state.scheduled {
+      background: #eef4ff;
+      color: #315be8;
     }
 
     .match {
@@ -238,11 +212,11 @@
         1fr auto 1fr;
 
       align-items: center;
-
-      gap: 12px;
+      gap: 10px;
     }
 
     .team {
+      min-width: 0;
       text-align: center;
     }
 
@@ -251,23 +225,44 @@
       align-items: center;
       justify-content: center;
 
-      width: 55px;
-      height: 55px;
+      width: 58px;
+      height: 58px;
 
-      margin:
-        0 auto
-        10px;
+      margin: 0 auto 10px;
 
       border-radius: 18px;
 
       background: #f2f4f7;
 
-      font-size: 26px;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .team.lotte .team-logo {
+      background: #e51b35;
+      color: white;
     }
 
     .team-name {
+      overflow: hidden;
+
       font-size: 15px;
       font-weight: 800;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .score-area {
+      min-width: 76px;
+      text-align: center;
+    }
+
+    .score {
+      font-size: 27px;
+      font-weight: 900;
+
+      letter-spacing: -0.04em;
     }
 
     .versus {
@@ -278,33 +273,35 @@
     }
 
     .game-info {
-      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
 
+      gap: 5px;
+
+      margin-top: 20px;
       padding-top: 17px;
 
-      border-top:
-        1px solid
-        #edf0f3;
-
-      text-align: center;
+      border-top: 1px solid #edf0f3;
 
       color: #7c8797;
 
       font-size: 13px;
     }
 
-    .placeholder {
-      padding:
-        26px
-        20px;
+    .dot {
+      color: #c4c9d0;
+    }
 
+    .placeholder {
+      padding: 30px 20px;
       text-align: center;
     }
 
     .placeholder-icon {
-      margin-bottom: 9px;
-
-      font-size: 25px;
+      margin-bottom: 10px;
+      font-size: 27px;
     }
 
     .placeholder strong {
@@ -333,24 +330,16 @@
       display: grid;
 
       grid-template-columns:
-        75px
-        1fr
-        auto;
+        75px 1fr auto;
 
       align-items: center;
-
       gap: 8px;
 
-      padding:
-        15px
-        16px;
+      padding: 15px 16px;
 
       background: white;
 
-      border:
-        1px solid
-        #e7eaf0;
-
+      border: 1px solid #e7eaf0;
       border-radius: 16px;
     }
 
@@ -373,11 +362,15 @@
       font-weight: 700;
     }
 
+    .loading {
+      opacity: 0.55;
+    }
+
     .menu {
       display: grid;
+
       grid-template-columns:
-        1fr
-        1fr;
+        1fr 1fr;
 
       gap: 11px;
     }
@@ -385,29 +378,23 @@
     .menu-card {
       min-height: 125px;
 
-      padding:
-        18px;
+      padding: 18px;
 
-      border:
-        1px solid
-        #e6e9ee;
-
+      border: 1px solid #e6e9ee;
       border-radius: 19px;
 
       background: white;
 
-      text-decoration: none;
       color: inherit;
+      text-decoration: none;
     }
 
     .menu-card:active {
-      transform:
-        scale(0.985);
+      transform: scale(0.985);
     }
 
     .menu-icon {
       margin-bottom: 22px;
-
       font-size: 23px;
     }
 
@@ -421,7 +408,6 @@
 
     .menu-card span {
       color: #8a94a3;
-
       font-size: 11px;
     }
 
@@ -434,17 +420,12 @@
 
       font-size: 11px;
     }
-
-    .loading {
-      opacity: 0.55;
-    }
   </style>
 </head>
 
 <body>
 
   <header class="top">
-
     <div class="top-inner">
 
       <div class="brand-row">
@@ -478,7 +459,6 @@
       </p>
 
     </div>
-
   </header>
 
 
@@ -487,6 +467,7 @@
     <section class="section">
 
       <div class="section-title">
+
         <h2>
           오늘의 경기
         </h2>
@@ -494,7 +475,9 @@
         <span id="todayDate">
           -
         </span>
+
       </div>
+
 
       <div
         class="card placeholder"
@@ -506,12 +489,11 @@
         </div>
 
         <strong>
-          경기 정보를 준비 중입니다
+          경기 정보를 불러오는 중
         </strong>
 
         <p>
-          다음 단계에서 KBO의
-          실제 경기 데이터를 연결합니다.
+          KBO 데이터를 확인하고 있습니다.
         </p>
 
       </div>
@@ -522,6 +504,7 @@
     <section class="section">
 
       <div class="section-title">
+
         <h2>
           경기 일정
         </h2>
@@ -529,6 +512,7 @@
         <span>
           최근 3 · 다음 3
         </span>
+
       </div>
 
       <div
@@ -543,7 +527,7 @@
           </div>
 
           <div class="game-teams">
-            KBO 데이터 연결 예정
+            다음 단계에서 연결
           </div>
 
           <div class="game-result">
@@ -560,7 +544,7 @@
           </div>
 
           <div class="game-teams">
-            KBO 데이터 연결 예정
+            다음 단계에서 연결
           </div>
 
           <div class="game-result">
@@ -577,12 +561,11 @@
     <section class="section">
 
       <div class="section-title">
-
         <h2>
           더 보기
         </h2>
-
       </div>
+
 
       <div class="menu">
 
@@ -590,9 +573,7 @@
           href="#"
           class="menu-card"
           onclick="
-            prepare(
-              'KBO 순위'
-            );
+            prepare('KBO 순위');
             return false;
           "
         >
@@ -616,9 +597,7 @@
           href="#"
           class="menu-card"
           onclick="
-            prepare(
-              '롯데 선수단'
-            );
+            prepare('롯데 선수단');
             return false;
           "
         >
@@ -651,8 +630,19 @@
 
   <script>
 
-    function setDate() {
+    function escapeHtml(value) {
+      return String(
+        value ?? ""
+      )
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
+
+    function setDate() {
       const now =
         new Date();
 
@@ -660,6 +650,9 @@
         new Intl.DateTimeFormat(
           "ko-KR",
           {
+            timeZone:
+              "Asia/Seoul",
+
             month:
               "long",
 
@@ -669,9 +662,7 @@
             weekday:
               "short"
           }
-        ).format(
-          now
-        );
+        ).format(now);
 
       document
         .getElementById(
@@ -682,9 +673,277 @@
     }
 
 
-    function prepare(
-      name
-    ) {
+    function teamSymbol(team) {
+      if (
+        team.id === "LT"
+      ) {
+        return "LOTTE";
+      }
+
+      return (
+        team.name ||
+        team.id ||
+        "?"
+      );
+    }
+
+
+    function statusClass(status) {
+      if (
+        status === "경기 중"
+      ) {
+        return "live";
+      }
+
+      if (
+        status === "경기 종료"
+      ) {
+        return "finished";
+      }
+
+      return "scheduled";
+    }
+
+
+    function renderNoGame() {
+      const box =
+        document.getElementById(
+          "todayGame"
+        );
+
+      box.className =
+        "card placeholder";
+
+      box.innerHTML = `
+        <div class="placeholder-icon">
+          ⚾
+        </div>
+
+        <strong>
+          오늘은 롯데 경기가 없습니다
+        </strong>
+
+        <p>
+          다음 경기 일정은 아래에서
+          확인할 수 있습니다.
+        </p>
+      `;
+    }
+
+
+    function renderError() {
+      const box =
+        document.getElementById(
+          "todayGame"
+        );
+
+      box.className =
+        "card placeholder";
+
+      box.innerHTML = `
+        <div class="placeholder-icon">
+          ⚠️
+        </div>
+
+        <strong>
+          경기 정보를 불러오지 못했습니다
+        </strong>
+
+        <p>
+          잠시 후 다시 시도해 주세요.
+        </p>
+      `;
+    }
+
+
+    function renderGame(game) {
+      const box =
+        document.getElementById(
+          "todayGame"
+        );
+
+      const away =
+        game.away || {};
+
+      const home =
+        game.home || {};
+
+
+      const hasScore =
+        away.score !== null &&
+        away.score !== undefined &&
+        home.score !== null &&
+        home.score !== undefined;
+
+
+      const middle =
+        hasScore
+          ? `
+            <div class="score">
+              ${escapeHtml(away.score)}
+              :
+              ${escapeHtml(home.score)}
+            </div>
+          `
+          : `
+            <div class="versus">
+              VS
+            </div>
+          `;
+
+
+      const awayClass =
+        away.id === "LT"
+          ? "team lotte"
+          : "team";
+
+
+      const homeClass =
+        home.id === "LT"
+          ? "team lotte"
+          : "team";
+
+
+      box.className =
+        "card today-card";
+
+
+      box.innerHTML = `
+        <div
+          class="
+            game-state
+            ${statusClass(game.status)}
+          "
+        >
+          ${escapeHtml(game.status)}
+        </div>
+
+
+        <div class="match">
+
+          <div class="${awayClass}">
+
+            <div class="team-logo">
+              ${escapeHtml(
+                teamSymbol(away)
+              )}
+            </div>
+
+            <div class="team-name">
+              ${escapeHtml(
+                away.name
+              )}
+            </div>
+
+          </div>
+
+
+          <div class="score-area">
+            ${middle}
+          </div>
+
+
+          <div class="${homeClass}">
+
+            <div class="team-logo">
+              ${escapeHtml(
+                teamSymbol(home)
+              )}
+            </div>
+
+            <div class="team-name">
+              ${escapeHtml(
+                home.name
+              )}
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="game-info">
+
+          <span>
+            ${escapeHtml(
+              game.time ||
+              "시간 미정"
+            )}
+          </span>
+
+          <span class="dot">
+            ·
+          </span>
+
+          <span>
+            ${escapeHtml(
+              game.stadium ||
+              "구장 미정"
+            )}
+          </span>
+
+        </div>
+      `;
+    }
+
+
+    async function loadTodayGame() {
+      try {
+        const response =
+          await fetch(
+            "/api/today",
+            {
+              cache:
+                "no-store"
+            }
+          );
+
+
+        if (!response.ok) {
+          throw new Error(
+            "HTTP " +
+            response.status
+          );
+        }
+
+
+        const data =
+          await response.json();
+
+
+        if (!data.success) {
+          throw new Error(
+            data.error ||
+            "API 오류"
+          );
+        }
+
+
+        if (
+          !data.hasGame ||
+          !data.game
+        ) {
+          renderNoGame();
+          return;
+        }
+
+
+        renderGame(
+          data.game
+        );
+      }
+
+      catch (error) {
+        console.error(
+          error
+        );
+
+        renderError();
+      }
+    }
+
+
+    function prepare(name) {
       alert(
         name +
         " 기능은 다음 단계에서 연결합니다."
@@ -693,6 +952,7 @@
 
 
     setDate();
+    loadTodayGame();
 
   </script>
 
