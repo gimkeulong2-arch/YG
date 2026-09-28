@@ -1,3 +1,8 @@
+import {
+  handleStandings
+} from "./api/standings.js";
+
+
 const KBO_API =
   "https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList";
 
@@ -321,15 +326,6 @@ function isCancelledGame(game) {
 }
 
 
-/*
- * 최근 롯데 경기 찾기
- *
- * 오늘 이전 날짜부터
- * 하루씩 뒤로 이동한다.
- *
- * 동시에 여러 날짜를
- * 요청하지 않는다.
- */
 async function findRecentGames(
   today,
   wanted = 3
@@ -396,12 +392,6 @@ async function findRecentGames(
 }
 
 
-/*
- * 다음 롯데 경기 찾기
- *
- * 오늘 다음 날짜부터
- * 하루씩 앞으로 이동한다.
- */
 async function findNextGames(
   today,
   wanted = 3
@@ -503,6 +493,20 @@ export default {
       new URL(
         request.url
       );
+
+
+    /*
+     * KBO 순위
+     *
+     * 별도 파일
+     * api/standings.js가 처리한다.
+     */
+    if (
+      url.pathname ===
+      "/api/standings"
+    ) {
+      return handleStandings();
+    }
 
 
     /*
@@ -740,13 +744,6 @@ export default {
           getKSTDate();
 
 
-        /*
-         * 일부러 Promise.all을
-         * 사용하지 않는다.
-         *
-         * KBO 서버에 날짜별 요청을
-         * 순차적으로 보낸다.
-         */
         const recent =
           await findRecentGames(
             today,
@@ -761,11 +758,6 @@ export default {
           );
 
 
-        /*
-         * 최근 경기는
-         * 오래된 경기 → 최신 경기
-         * 순으로 화면에 표시
-         */
         recent.reverse();
 
 
@@ -801,7 +793,8 @@ export default {
 
 
     /*
-     * index.html 등
+     * index.html,
+     * standings.html 등
      * 정적 파일
      */
     return env.ASSETS.fetch(
