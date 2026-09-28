@@ -338,9 +338,6 @@
       line-height: 1.55;
     }
 
-
-    /* 경기 일정 */
-
     .schedule-group {
       margin-bottom: 20px;
     }
@@ -464,9 +461,6 @@
       opacity: 0.55;
     }
 
-
-    /* 메뉴 */
-
     .menu {
       display: grid;
 
@@ -571,8 +565,6 @@
 
   <main class="main">
 
-    <!-- 오늘의 경기 -->
-
     <section class="section">
 
       <div class="section-title">
@@ -609,8 +601,6 @@
 
     </section>
 
-
-    <!-- 경기 일정 -->
 
     <section class="section">
 
@@ -703,8 +693,6 @@
     </section>
 
 
-    <!-- 더 보기 -->
-
     <section class="section">
 
       <div class="section-title">
@@ -722,41 +710,10 @@
           href="#"
           class="menu-card"
           onclick="
-            prepare('KBO 순위');
+            prepare('롯데 선수단');
             return false;
           "
         >
-
-          <a
-  href="#"
-  class="menu-card"
-  onclick="
-    prepare('롯데 선수단');
-    return false;
-  "
->
-
-  <div class="menu-icon">
-    👥
-  </div>
-
-  <strong>
-    롯데 선수단
-  </strong>
-
-  <span>
-    선수 명단과 기록
-  </span>
-
-          </a>
-
-        </a>
-
-
-        <a
-  href="/standings.html"
-  class="menu-card"
->
 
           <div class="menu-icon">
             👥
@@ -768,6 +725,26 @@
 
           <span>
             선수 명단과 기록
+          </span>
+
+        </a>
+
+
+        <a
+          href="/standings.html"
+          class="menu-card"
+        >
+
+          <div class="menu-icon">
+            🏆
+          </div>
+
+          <strong>
+            KBO 순위
+          </strong>
+
+          <span>
+            10개 구단 순위
           </span>
 
         </a>
