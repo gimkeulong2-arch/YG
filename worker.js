@@ -1,6 +1,8 @@
 const KBO_API =
   "https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList";
 
+const LOTTE_ID = "LT";
+
 
 function getKSTDate() {
   const parts =
@@ -24,6 +26,63 @@ function getKSTDate() {
     get("month") +
     get("day")
   );
+}
+
+
+function parseDate(dateString) {
+  const year =
+    Number(
+      dateString.slice(0, 4)
+    );
+
+  const month =
+    Number(
+      dateString.slice(4, 6)
+    );
+
+  const day =
+    Number(
+      dateString.slice(6, 8)
+    );
+
+  return new Date(
+    Date.UTC(
+      year,
+      month - 1,
+      day
+    )
+  );
+}
+
+
+function formatDate(date) {
+  return (
+    String(
+      date.getUTCFullYear()
+    ) +
+    String(
+      date.getUTCMonth() + 1
+    ).padStart(2, "0") +
+    String(
+      date.getUTCDate()
+    ).padStart(2, "0")
+  );
+}
+
+
+function moveDate(
+  dateString,
+  amount
+) {
+  const date =
+    parseDate(dateString);
+
+  date.setUTCDate(
+    date.getUTCDate() +
+    amount
+  );
+
+  return formatDate(date);
 }
 
 
@@ -110,11 +169,11 @@ function isLotteGame(game) {
   return (
     String(
       game?.AWAY_ID || ""
-    ).toUpperCase() === "LT" ||
+    ).toUpperCase() === LOTTE_ID ||
 
     String(
       game?.HOME_ID || ""
-    ).toUpperCase() === "LT"
+    ).toUpperCase() === LOTTE_ID
   );
 }
 
@@ -128,6 +187,20 @@ function getGameStatus(game) {
 
   if (state === "3") {
     return "경기 종료";
+  }
+
+
+  const cancel =
+    String(
+      game?.CANCEL_SC_NM || ""
+    );
+
+
+  if (
+    cancel &&
+    cancel !== "정상경기"
+  ) {
+    return cancel;
   }
 
 
@@ -147,20 +220,6 @@ function getGameStatus(game) {
     homeScore !== ""
   ) {
     return "경기 중";
-  }
-
-
-  const cancel =
-    String(
-      game?.CANCEL_SC_NM || ""
-    );
-
-
-  if (
-    cancel &&
-    cancel !== "정상경기"
-  ) {
-    return cancel;
   }
 
 
@@ -240,6 +299,175 @@ function normalizeGame(game) {
 }
 
 
+function isFinishedGame(game) {
+  return (
+    String(
+      game?.GAME_STATE_SC || ""
+    ) === "3"
+  );
+}
+
+
+function isCancelledGame(game) {
+  const cancel =
+    String(
+      game?.CANCEL_SC_NM || ""
+    );
+
+  return (
+    cancel &&
+    cancel !== "정상경기"
+  );
+}
+
+
+/*
+ * 최근 롯데 경기 찾기
+ *
+ * 오늘 이전 날짜부터
+ * 하루씩 뒤로 이동한다.
+ *
+ * 동시에 여러 날짜를
+ * 요청하지 않는다.
+ */
+async function findRecentGames(
+  today,
+  wanted = 3
+) {
+  const found = [];
+
+  let date =
+    moveDate(
+      today,
+      -1
+    );
+
+
+  for (
+    let checked = 0;
+    checked < 45;
+    checked++
+  ) {
+    const raw =
+      await getKboGames(
+        date
+      );
+
+
+    const games =
+      getGamesArray(raw);
+
+
+    const lotteGames =
+      games.filter(
+        game =>
+          isLotteGame(game) &&
+          isFinishedGame(game) &&
+          !isCancelledGame(game)
+      );
+
+
+    for (
+      const game
+      of lotteGames
+    ) {
+      found.push(
+        normalizeGame(game)
+      );
+
+
+      if (
+        found.length >= wanted
+      ) {
+        return found;
+      }
+    }
+
+
+    date =
+      moveDate(
+        date,
+        -1
+      );
+  }
+
+
+  return found;
+}
+
+
+/*
+ * 다음 롯데 경기 찾기
+ *
+ * 오늘 다음 날짜부터
+ * 하루씩 앞으로 이동한다.
+ */
+async function findNextGames(
+  today,
+  wanted = 3
+) {
+  const found = [];
+
+  let date =
+    moveDate(
+      today,
+      1
+    );
+
+
+  for (
+    let checked = 0;
+    checked < 45;
+    checked++
+  ) {
+    const raw =
+      await getKboGames(
+        date
+      );
+
+
+    const games =
+      getGamesArray(raw);
+
+
+    const lotteGames =
+      games.filter(
+        game =>
+          isLotteGame(game) &&
+          !isFinishedGame(game) &&
+          !isCancelledGame(game)
+      );
+
+
+    for (
+      const game
+      of lotteGames
+    ) {
+      found.push(
+        normalizeGame(game)
+      );
+
+
+      if (
+        found.length >= wanted
+      ) {
+        return found;
+      }
+    }
+
+
+    date =
+      moveDate(
+        date,
+        1
+      );
+  }
+
+
+  return found;
+}
+
+
 function jsonResponse(
   data,
   status = 200
@@ -278,7 +506,7 @@ export default {
 
 
     /*
-     * KBO 원본 데이터 확인
+     * KBO 원본 데이터 테스트
      */
     if (
       url.pathname ===
@@ -387,6 +615,7 @@ export default {
           success: true,
           date,
           hasGame: true,
+
           game:
             normalizeGame(
               lotteGame
@@ -500,7 +729,80 @@ export default {
 
 
     /*
-     * index.html 등 정적 파일
+     * 최근 3경기 + 다음 3경기
+     */
+    if (
+      url.pathname ===
+      "/api/schedule"
+    ) {
+      try {
+        const today =
+          getKSTDate();
+
+
+        /*
+         * 일부러 Promise.all을
+         * 사용하지 않는다.
+         *
+         * KBO 서버에 날짜별 요청을
+         * 순차적으로 보낸다.
+         */
+        const recent =
+          await findRecentGames(
+            today,
+            3
+          );
+
+
+        const next =
+          await findNextGames(
+            today,
+            3
+          );
+
+
+        /*
+         * 최근 경기는
+         * 오래된 경기 → 최신 경기
+         * 순으로 화면에 표시
+         */
+        recent.reverse();
+
+
+        return jsonResponse({
+          success: true,
+
+          date:
+            today,
+
+          recent,
+
+          next,
+
+          total:
+            recent.length +
+            next.length
+        });
+      }
+
+      catch (error) {
+        return jsonResponse(
+          {
+            success: false,
+
+            error:
+              error?.message ||
+              String(error)
+          },
+          500
+        );
+      }
+    }
+
+
+    /*
+     * index.html 등
+     * 정적 파일
      */
     return env.ASSETS.fetch(
       request
