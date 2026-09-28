@@ -2,6 +2,10 @@ import {
   handleStandings
 } from "./api/standings.js";
 
+import {
+  handlePlayers
+} from "./api/players.js";
+
 
 const KBO_API =
   "https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList";
@@ -508,6 +512,12 @@ export default {
       return handleStandings();
     }
 
+    if (
+  url.pathname ===
+  "/api/players"
+) {
+  return handlePlayers();
+    }
 
     /*
      * KBO 원본 데이터 테스트
